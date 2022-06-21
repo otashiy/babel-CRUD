@@ -5,16 +5,17 @@ export const UserContext = createContext();
 const UserProvider = ({children}) => {
 
 const [ users, setUsers ] = useState(null);
-const [ isFetched, setFetched ] = useState(false);
 
 useEffect(() => {
-if (!isFetched) {
-setFetched(true);
 fetch("https://coursesnodejs.herokuapp.com/user")
-.then(response => response.json())
-.then((users) => users)
-}
-},[isFetched]);
+.then(res => res.json())
+.then((users) => {
+setUsers({
+...users
+})
+})
+},[users]);
+
 
 if(!users) {
 return null
